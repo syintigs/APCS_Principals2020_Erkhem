@@ -1,0 +1,353 @@
+package com.company;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Main {
+
+	public static void main(String[] args) {
+    	setUp();
+    	ZScoreGUI.setUpZScore();
+    	BinomialGUI.setUpBinomial();
+	}
+
+
+	public static void setUp()
+	{
+    	//Setting up Panel
+    	myPanel.setLayout(null);
+    	myPanel.setSize(1920,1300);
+    	myPanel.setVisible(true);
+
+    	//Setting up frame
+    	myFrame.setSize(1920,800);
+    	myFrame.setLayout(null);
+    	myFrame.setResizable(false);
+    	myFrame.setVisible(true);
+    	myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	myFrame.add(myPanel);
+	}
+
+	public static void setFont(JLabel x1, JLabel x2, JLabel x3, JLabel x4, JLabel x5, JLabel x6, JTextField y1, JTextField y2 , JTextField y3, JTextField y4, JButton z1, JButton z2)
+	{
+    	x1.setFont(font);
+    	x2.setFont(font);
+    	x3.setFont(font);
+    	x4.setFont(font);
+    	x5.setFont(font);
+    	x6.setFont(font);
+    	y1.setFont(font);
+    	y2.setFont(font);
+    	y3.setFont(font);
+    	y4.setFont(font);
+    	z1.setFont(font);
+    	z2.setFont(font);
+	}
+
+	public static Font font = new Font("Arial", Font.BOLD, 50);
+	//ZScore Fields
+	public static JLabel titleZScore= new JLabel("Z-Score");
+	public static JLabel wrongSyntaxZ = new JLabel("Wrong Syntax");
+	public static JLabel zMeanLabel = new JLabel("μ");
+	public static JLabel zScoreLabel = new JLabel("Z-Score");
+	public static JLabel zStandardDeviationLabel = new JLabel("s");
+	public static JLabel zSampleNumberLabel = new JLabel("x̄");
+	public static JTextField explanatoryZMean = new JTextField(30);
+	public static JTextField explanatoryZStandardDeviation= new JTextField(30);
+	public static JTextField explanatoryZSampleNumber = new JTextField(30);
+	public static JTextField explanatoryZScore = new JTextField(30);
+	public static JButton resetZ = new JButton("Reset");
+	public static JButton buttonZ= new JButton("Calc");
+
+	//Binomial Fields
+	public static JLabel titleBinomial = new JLabel("Binomial Distribution");
+	public static JLabel wrongSyntaxBinomial = new JLabel("Wrong Syntax");
+	public static JLabel numberOfX = new JLabel("X");
+	public static JLabel numTrial = new JLabel("Trial");
+	public static JLabel probability = new JLabel("P");
+	public static JLabel newProbability = new JLabel("Prob");
+	public static JTextField explanatoryX = new JTextField(30);
+	public static JTextField explanatoryTrial= new JTextField(30);
+	public static JTextField explanatoryP = new JTextField(30);
+	public static JTextField explanatoryProbability= new JTextField(30);
+	public static JButton resetBinomial = new JButton("Reset");
+	public static JButton buttonBinomial = new JButton("Calc");
+
+	//Panel and Frame
+	public static JPanel myPanel = new JPanel();
+	public static JFrame myFrame = new JFrame("Z and T scores");
+
+
+
+}
+
+package com.company;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static com.company.Main.*;
+
+public class ZScoreGUI {
+
+
+
+	public static void setUpZScore(){
+    	//Setting up fonts
+    	setFont(titleZScore, wrongSyntaxZ, zMeanLabel, zScoreLabel, zSampleNumberLabel, zStandardDeviationLabel, explanatoryZMean, explanatoryZScore, explanatoryZSampleNumber, explanatoryZStandardDeviation,resetZ, buttonZ);
+    	//Setting up Label Bounds
+    	wrongSyntaxZ.setVisible(false);
+    	titleZScore.setBounds(700,0,800,100);
+    	wrongSyntaxZ.setBounds(750,300,400,100);
+    	zMeanLabel.setBounds(100,100,200,100);
+    	zScoreLabel.setBounds(1300, 100, 200,100);
+    	zStandardDeviationLabel.setBounds(900,100,200,100);
+    	zSampleNumberLabel.setBounds(500,100,200,100);
+
+    	//Setting up TextFields bounds
+    	explanatoryZMean.setBounds(100,200,200,100);
+    	explanatoryZSampleNumber.setBounds(500, 200, 200,100);
+    	explanatoryZStandardDeviation.setBounds(900,200,200,100);
+    	explanatoryZScore.setBounds(1300,200,200,100);
+
+    	//Reset Button
+    	resetZ.setBounds(1700,100,200,100);
+    	resetZ.addActionListener(new ActionListener()
+    	{
+        	public void actionPerformed(ActionEvent e) {
+            	wrongSyntaxZ.setVisible(false);
+            	explanatoryZStandardDeviation.setText("");
+            	explanatoryZSampleNumber.setText("");
+            	explanatoryZScore.setText("");
+            	explanatoryZMean.setText("");
+        	}
+    	});
+
+
+    	// Calc Button
+    	buttonZ.setBounds(1700,200,200,100);
+    	buttonZ.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+            	wrongSyntaxZ.setVisible(false);
+            	boolean incorrectSyntaxRSquared= (explanatoryZMean.getText().length()==0 && explanatoryZScore.getText().length()==0) || (explanatoryZMean.getText().length()==0 && explanatoryZStandardDeviation.getText().length()==0) || (explanatoryZMean.getText().length()==0 && explanatoryZSampleNumber.getText().length()==0) || (explanatoryZStandardDeviation.getText().length()==0 && explanatoryZScore.getText().length()==0) || (explanatoryZSampleNumber.getText().length()==0 && explanatoryZStandardDeviation.getText().length()==0) ||(explanatoryZSampleNumber.getText().length()==0 && explanatoryZScore.getText().length()==0);
+            	// This was unnecessary. No this is counterintuitive.
+            	// boolean incorrectSyntaxRCubed= (explanatoryZMean.getText().length()==0 && explanatoryZScore.getText().length()==0 && explanatoryZSampleNumber.getText().length()==0) || (explanatoryZMean.getText().length()==0 && explanatoryZScore.getText().length()==0 && explanatoryZStandardDeviation.getText().length()==0) || (explanatoryZStandardDeviation.getText().length()==0 && explanatoryZScore.getText().length()==0 && explanatoryZSampleNumber.getText().length()==0) || (explanatoryZMean.getText().length()==0 && explanatoryZStandardDeviation.getText().length()==0 && explanatoryZSampleNumber.getText().length()==0);
+            	boolean incorrectSyntaxRQuadrupled = (explanatoryZMean.getText().length()==0 && explanatoryZScore.getText().length()==0 && explanatoryZSampleNumber.getText().length()==0 && explanatoryZStandardDeviation.getText().length()==0);
+            	if(incorrectSyntaxRSquared || incorrectSyntaxRQuadrupled)
+            	{
+                	wrongSyntaxZ.setVisible(true);
+            	}
+            	else if(explanatoryZMean.getText().length()==0)
+            	{
+                	double standardDeviation = Double.parseDouble(explanatoryZStandardDeviation.getText());
+                	double sampleNumber = Double.parseDouble(explanatoryZSampleNumber.getText());
+                	double zScore = Double.parseDouble(explanatoryZScore.getText());
+                	double mean = Calculations.calcMean(zScore,standardDeviation,sampleNumber);
+                	explanatoryZMean.setText(String.valueOf(mean));
+
+            	}
+            	else if(explanatoryZScore.getText().length()==0)
+            	{
+                	double standardDeviation = Double.parseDouble(explanatoryZStandardDeviation.getText());
+                	double sampleNumber = Double.parseDouble(explanatoryZSampleNumber.getText());
+                	double mean = Double.parseDouble(explanatoryZMean.getText());
+                	double zScore = Calculations.calcZScore(mean,standardDeviation,sampleNumber);
+                	explanatoryZScore.setText(String.valueOf(zScore));
+            	}
+            	else if(explanatoryZSampleNumber.getText().length()==0)
+            	{
+                	double standardDeviation = Double.parseDouble(explanatoryZStandardDeviation.getText());
+                	double mean = Double.parseDouble(explanatoryZMean.getText());
+                	double zScore = Double.parseDouble(explanatoryZScore.getText());
+                	double sampleNumber = Calculations.calcSampleNUmber(zScore,mean,standardDeviation);
+                	explanatoryZSampleNumber.setText(String.valueOf(sampleNumber));
+            	}
+            	else if(explanatoryZStandardDeviation.getText().length()==0)
+            	{
+                	double mean = Double.parseDouble(explanatoryZMean.getText());
+                	double sampleNumber = Double.parseDouble(explanatoryZSampleNumber.getText());
+                	double zScore = Double.parseDouble(explanatoryZScore.getText());
+                	double standardDeviation = Calculations.calcStandardDeviation(zScore,mean,sampleNumber);
+                	explanatoryZStandardDeviation.setText(String.valueOf(standardDeviation));
+            	}
+            	else
+            	{
+                	wrongSyntaxZ.setVisible(true);
+
+            	}
+            	myPanel.revalidate();
+            	myPanel.repaint();
+        	}
+    	});
+
+
+
+    	//Adding to Panel
+    	myPanel.add(titleZScore);
+    	myPanel.add(resetZ);
+    	myPanel.add(wrongSyntaxZ);
+    	myPanel.add(zMeanLabel);
+    	myPanel.add(zScoreLabel);
+    	myPanel.add(zSampleNumberLabel);
+    	myPanel.add(zStandardDeviationLabel);
+    	myPanel.add(explanatoryZMean);
+
+    	myPanel.add(explanatoryZSampleNumber);
+    	myPanel.add(explanatoryZScore);    	myPanel.add(explanatoryZStandardDeviation);
+    	myPanel.add(buttonZ);
+	}
+
+
+
+
+
+}
+
+package com.company;
+
+public class Calculations {
+	public static double calcZScore(double mean, double standardDeviation, double sampleNumber)
+	{
+    	double zScore = (sampleNumber-mean)/standardDeviation;
+    	return zScore;
+	}
+
+	public static double calcMean(double zScore, double standardDeviation, double sampleNumber)
+	{
+    	// zScore= (sampleNumber-mean)/standardDeviation
+    	// zScore*standardDeviation=sampleNumber-mean
+    	//mean = sampleNumber-(zScore)(standardDeviation)
+    	double mean = sampleNumber-(zScore*standardDeviation);
+    	return mean;
+	}
+	public static double calcStandardDeviation(double zScore, double mean, double sampleNumber)
+	{
+    	double standardDeviation = (sampleNumber-mean)/zScore;
+    	return standardDeviation;
+	}
+	public static double calcSampleNUmber(double zScore, double mean, double standardDeviation)
+	{
+    	//sampleNumber-mean = (zScore)(standardDeviation)
+    	double sampleNumber = mean + (zScore*standardDeviation);
+    	return sampleNumber;
+	}
+
+	public static double calcBinomial(double x, double numTrial, double p)
+	{
+    	double probability = calcPower(x,p)*calcPower(numTrial-x,1-p) *calcCombination(numTrial, x);
+    	return probability;
+	}
+
+	public static double calcPower(double x, double y)
+	{
+    	double sumOfX= 1;
+    	for(int i = 0; i<y ; i++)
+    	{
+        	sumOfX = sumOfX*x;
+    	}
+    	return sumOfX;
+	}
+
+
+	public static double calcCombination(double N, double R)
+	{
+    	double nSum = 1;
+    	double rSum = 1;
+    	for(double i = N; i>(N-R) ; i--)
+    	{
+        	nSum= nSum*i;
+    	}
+    	for(double i = R; i>0; i-- )
+    	{
+        	rSum = rSum*i;
+    	}
+    	double combination = (nSum)/rSum;
+    	return combination;
+	}
+}
+
+
+package com.company;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static com.company.Main.*;
+import static com.company.Main.font;
+
+public class BinomialGUI {
+
+	public static void setUpBinomial()
+	{
+    	//Setting fonts
+    	setFont(titleBinomial, wrongSyntaxBinomial, numberOfX, probability, newProbability, numTrial, explanatoryProbability, explanatoryTrial, explanatoryP, explanatoryX,resetBinomial, buttonBinomial);
+    	//Labels
+    	wrongSyntaxBinomial.setVisible(false);
+    	titleBinomial.setBounds(700,400,800,100);
+    	wrongSyntaxBinomial.setBounds(750, 800, 400, 100);
+    	numberOfX.setBounds(100,500,200,100);
+    	probability.setBounds(500,500,200,100);
+    	numTrial.setBounds(900,500,200,100);
+    	newProbability.setBounds(1300,500,200,100);
+
+    	//TextFields
+    	explanatoryTrial.setBounds(100,600,200,100);
+    	explanatoryX.setBounds(500,600,200,100);
+    	explanatoryP.setBounds(900,600,200,100);
+    	explanatoryProbability.setBounds(1300,600,200,100);
+
+    	//ResetButton
+    	resetBinomial.setBounds(1700,500,200,100);
+    	resetBinomial.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e)
+        	{
+            	wrongSyntaxBinomial.setVisible(false);
+            	explanatoryP.setText("");
+            	explanatoryProbability.setText("");
+            	explanatoryTrial.setText("");
+            	explanatoryX.setText("");
+        	}
+
+    	});
+
+    	//CalcButton
+    	buttonBinomial.setBounds(1700,600,200,100);
+    	buttonBinomial.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e){
+            	wrongSyntaxBinomial.setVisible(false);
+            	if(explanatoryTrial.getText().length()>0 && explanatoryP.getText().length()>0 && explanatoryX.getText().length()>0)
+            	{
+                	double probability = Calculations.calcBinomial(Double.parseDouble(explanatoryTrial.getText()), Double.parseDouble(explanatoryX.getText()), Double.parseDouble(explanatoryP.getText()));
+                	explanatoryProbability.setText(String.valueOf(probability));
+            	}
+            	else
+            	{
+                	wrongSyntaxBinomial.setVisible(true);
+            	}
+            	myPanel.revalidate();
+            	myPanel.repaint();
+        	}
+
+    	});
+
+
+    	//Adding to Panel
+    	myPanel.add(titleBinomial);
+    	myPanel.add(explanatoryP);
+    	myPanel.add(explanatoryTrial);
+    	myPanel.add(explanatoryX);
+    	myPanel.add(explanatoryProbability);
+    	myPanel.add(probability);
+    	myPanel.add(numberOfX);
+    	myPanel.add(numTrial);
+    	myPanel.add(newProbability);
+    	myPanel.add(resetBinomial);
+    	myPanel.add(buttonBinomial);
+    	myPanel.add(wrongSyntaxBinomial);
+	}
+}
+
+
+
+
+
